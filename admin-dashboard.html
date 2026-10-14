@@ -67,7 +67,6 @@
       transition: background 0.25s, color 0.25s;
     }
 
-    /* LOGIN */
     .login-screen {
       min-height: 100vh;
       display: flex;
@@ -164,7 +163,6 @@
       display: none;
     }
 
-    /* Theme toggle (global) */
     .theme-toggle {
       position: fixed;
       bottom: 24px;
@@ -185,7 +183,6 @@
     }
     .theme-toggle:hover { opacity: 0.9; }
 
-    /* APP */
     .app { display: none; min-height: 100vh; }
     .app.show { display: flex; }
 
@@ -514,7 +511,6 @@
 
   <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark">🌙</button>
 
-  <!-- LOGIN -->
   <div class="login-screen" id="loginScreen">
     <div class="login-card">
       <div class="login-logo">A</div>
@@ -533,7 +529,6 @@
     </div>
   </div>
 
-  <!-- APP -->
   <div class="app" id="app">
     <aside class="sidebar">
       <div class="sidebar-top">
@@ -662,7 +657,6 @@
       activity: 'Activity'
     };
 
-    // Theme
     function toggleTheme() {
       const html = document.documentElement;
       const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
