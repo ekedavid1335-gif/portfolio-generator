@@ -104,7 +104,6 @@
       cursor: not-allowed;
     }
 
-    /* Google button */
     .btn-google {
       width: 100%;
       padding: 12px;
@@ -219,7 +218,6 @@
     const GOOGLE_API_URL = 'https://your-backend.com/api/auth/google';
     const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';  // ← change this
 
-    // ---------- EMAIL SIGN UP ----------
     async function handleSignup() {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim().toLowerCase();
@@ -278,7 +276,6 @@
       }
     }
 
-    // ---------- GOOGLE SIGN UP ----------
     function handleGoogleSignup() {
       const errorBox = document.getElementById('error');
       errorBox.style.display = 'none';
@@ -296,12 +293,10 @@
 
       google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          // Fallback: show One Tap didn't work, try popup style
           google.accounts.id.renderButton(
             document.createElement('div'),
             { theme: 'outline', size: 'large' }
           );
-          // Direct oauth token client as backup
           const client = google.accounts.oauth2.initTokenClient({
             client_id: GOOGLE_CLIENT_ID,
             scope: 'email profile',
@@ -317,7 +312,6 @@
     }
 
     async function onGoogleResponse(response) {
-      // response.credential is the ID token
       await sendGoogleToken(response.credential, 'id_token');
     }
 
@@ -349,7 +343,7 @@
         successBox.style.display = 'block';
 
         setTimeout(() => {
-          window.location.href = 'signin.html';  // or dashboard.html
+          window.location.href = 'signin.html';
         }, 1500);
 
       } catch (err) {
@@ -362,7 +356,6 @@
       }
     }
 
-    // Enter key submits email form
     document.querySelectorAll('input').forEach(input => {
       input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleSignup();
