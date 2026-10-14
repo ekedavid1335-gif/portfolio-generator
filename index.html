@@ -177,7 +177,6 @@
     <div class="error" id="error"></div>
     <div class="success" id="success"></div>
 
-    <!-- Google Sign Up -->
     <button class="btn-google" onclick="handleGoogleSignup()">
       <svg viewBox="0 0 24 24">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -190,7 +189,6 @@
 
     <div class="divider">or</div>
 
-    <!-- Email Sign Up -->
     <div class="form-group">
       <label>Full name</label>
       <input type="text" id="name" placeholder="Your full name" autocomplete="name">
@@ -213,27 +211,9 @@
     </p>
   </div>
 
-  <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
-    /*
-      ==============================
-      BACKEND + GOOGLE SETUP
-      ==============================
-
-      1. EMAIL SIGNUP
-         Change API_URL to your backend:
-         POST { name, email, password }
-
-      2. GOOGLE SIGNUP
-         - Create a project in Google Cloud Console
-         - Enable Google Identity
-         - Create OAuth 2.0 Client ID (Web)
-         - Put your Client ID in GOOGLE_CLIENT_ID below
-         - Backend endpoint: POST /api/auth/google
-           Body: { credential: "google-id-token" }
-    */
 
     const API_URL = 'https://your-backend.com/api/auth/signup';
     const GOOGLE_API_URL = 'https://your-backend.com/api/auth/google';
