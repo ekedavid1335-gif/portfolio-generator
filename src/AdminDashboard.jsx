@@ -58,7 +58,6 @@ function collectData() {
         }
       });
     } catch {
-      // ignore bad storage
     }
   });
 
@@ -159,7 +158,6 @@ export default function AdminDashboard() {
     data.portfolios.map((p) => p.theme).filter((t) => t && t !== '—')
   ).size;
 
-  // ---------- LOGIN ----------
   if (!isLoggedIn) {
     return (
       <>
@@ -205,7 +203,6 @@ export default function AdminDashboard() {
     );
   }
 
-  // ---------- DASHBOARD ----------
   return (
     <>
       <button
