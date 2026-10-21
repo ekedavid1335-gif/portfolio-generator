@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const LOGIN_API_URL = '' 
+const LOGIN_API_URL = ''
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -15,14 +15,12 @@ export default function SignIn() {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     const trimmed = email.trim().toLowerCase()
     if (!trimmed || !password) {
       setError('Please enter email and password.')
       setLoading(false)
       return
     }
-
     try {
       if (LOGIN_API_URL) {
         const res = await fetch(LOGIN_API_URL, {
@@ -48,11 +46,6 @@ export default function SignIn() {
             JSON.stringify({ name: user.name, email: user.email })
           )
           navigate('/dashboard')
-        } else if (
-          trimmed === 'princethaddeus589@gmail.com' &&
-          password === 'Linda2004@'
-        ) {
-          navigate('/admin')
         } else {
           setError('Invalid email or password.')
         }
@@ -69,9 +62,7 @@ export default function SignIn() {
         <div className="login-logo">P</div>
         <h1>Sign in</h1>
         <p className="sub">Welcome back to Portfolio Generator</p>
-
         {error && <div className="login-error">{error}</div>}
-
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -81,7 +72,6 @@ export default function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              autoComplete="username"
               required
             />
           </div>
@@ -94,14 +84,9 @@ export default function SignIn() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Your password"
-                autoComplete="current-password"
                 required
               />
-              <button
-                type="button"
-                className="pass-toggle"
-                onClick={() => setShowPass(!showPass)}
-              >
+              <button type="button" className="pass-toggle" onClick={() => setShowPass(!showPass)}>
                 {showPass ? 'Hide' : 'Show'}
               </button>
             </div>
@@ -110,10 +95,6 @@ export default function SignIn() {
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
-
-        <p className="auth-footer">
-          <Link to="/admin">Admin login</Link>
-        </p>
       </div>
     </div>
   )
