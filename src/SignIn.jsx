@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const LOGIN_API_URL = '' // e.g. 'https://your-backend.com/api/auth/login'
+const LOGIN_API_URL = '' 
 
 export default function SignIn() {
   const navigate = useNavigate()
