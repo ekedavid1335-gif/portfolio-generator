@@ -260,7 +260,6 @@ thead th.col-action { background: var(--table-head); }
   .menu-btn { display: none !important; }
   .sidebar-overlay { display: none !important; }
 }
-/* Auth pages (sign in / sign up) */
 .auth-page {
   min-height: 100vh;
   display: flex;
