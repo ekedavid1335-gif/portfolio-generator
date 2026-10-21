@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function UserDashboard() {
   const navigate = useNavigate()
@@ -32,15 +32,9 @@ export default function UserDashboard() {
         <div className="login-logo">{(user.name || 'U')[0].toUpperCase()}</div>
         <h1>Welcome, {user.name || 'User'}</h1>
         <p className="sub">{user.email}</p>
-        <p style={{ color: 'var(--muted)', marginBottom: 24, fontSize: '0.9rem' }}>
-          You are signed in. Your team can connect this to the full portfolio later.
-        </p>
         <button className="btn-primary" type="button" onClick={logout}>
           Sign out
         </button>
-        <p className="auth-footer">
-          <Link to="/admin">Admin panel</Link>
-        </p>
       </div>
     </div>
   )
