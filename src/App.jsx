@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import SignIn from './SignIn'
 import UserDashboard from './UserDashboard'
-import AdminDashboard from './AdminDashboard'
-import './App.css'
 import PortfolioBuilder from './PortfolioBuilder'
 import AIStudio from './AIStudio'
 import Premium from './Premium'
+import AdminDashboard from './AdminDashboard'
+import './App.css'
 
 function ThemeToggle() {
   const [theme, setTheme] = useState(
@@ -35,12 +35,11 @@ export default function App() {
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/dashboard" element={<UserDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="*" element={<Navigate to="/signin" replace />} />
-        <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/builder" element={<PortfolioBuilder />} />
         <Route path="/ai" element={<AIStudio />} />
         <Route path="/premium" element={<Premium />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="*" element={<Navigate to="/signin" replace />} />
       </Routes>
     </BrowserRouter>
   )
