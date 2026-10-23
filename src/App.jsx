@@ -4,6 +4,9 @@ import SignIn from './SignIn'
 import UserDashboard from './UserDashboard'
 import AdminDashboard from './AdminDashboard'
 import './App.css'
+import PortfolioBuilder from './PortfolioBuilder'
+import AIStudio from './AIStudio'
+import Premium from './Premium'
 
 function ThemeToggle() {
   const [theme, setTheme] = useState(
