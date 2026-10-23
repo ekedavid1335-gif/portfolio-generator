@@ -12,77 +12,43 @@ export default function SignIn() {
   const [showPass, setShowPass] = useState(false)
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-    const trimmed = email.trim().toLowerCase()
-    if (!trimmed || !password) {
-      setError('Please enter email and password.')
-      setLoading(false)
-      return
-    }
-    try {
-      if (LOGIN_API_URL) {
-        const res = await fetch(LOGIN_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: trimmed, password }),
-        })
-        const data = await res.json().catch(() => ({}))
-        if (!res.ok) {
-          setError(data.message || data.error || 'Login failed.')
-          setLoading(false)
-          return
-        }
-        if (data.token) localStorage.setItem('auth_token', data.token)
-        if (data.user) localStorage.setItem('auth_user', JSON.stringify(data.user))
-        navigate('/dashboard')
-      } else {
-        const users = JSON.parse(localStorage.getItem('pg_users') || '{}')
-        let user = users[trimmed]
+  e.preventDefault()
+  setError('')
+  setLoading(true)
 
-        if (!user) {
-          users[trimmed] = {
-            name: trimmed.split('@')[0],
-            email: trimmed,
-            password,
-            portfolios: [],
-          }
-          localStorage.setItem('pg_users', JSON.stringify(users))
-          localStorage.setItem(
-            'auth_user',
-            JSON.stringify({ name: trimmed.split('@')[0], email: trimmed })
-          )
-          if (localStorage.getItem('ai_credits') === null) {
-            localStorage.setItem('ai_credits', '3')
-          }
-          navigate('/dashboard')
-        } else if (user.password === password || user.Password === password) {
-          localStorage.setItem(
-            'auth_user',
-            JSON.stringify({
-              name: user.name || trimmed.split('@')[0],
-              email: user.email,
-            })
-          )
-          navigate('/dashboard')
-        } else {
-          user.password = password
-          user.name = user.name || trimmed.split('@')[0]
-          users[trimmed] = user
-          localStorage.setItem('pg_users', JSON.stringify(users))
-          localStorage.setItem(
-            'auth_user',
-            JSON.stringify({ name: user.name, email: user.email })
-          )
-          navigate('/dashboard')
-        }
-      }
-    } catch {
-      setError('Network error. Please try again.')
-    }
+  const trimmed = email.trim().toLowerCase()
+  if (!trimmed || !password) {
+    setError('Please enter email and password.')
     setLoading(false)
+    return
   }
+
+  try {
+    const users = JSON.parse(localStorage.getItem('pg_users') || '{}')
+    const name = users[trimmed]?.name || trimmed.split('@')[0]
+
+    users[trimmed] = {
+      ...(users[trimmed] || {}),
+      name,
+      email: trimmed,
+      password,
+      portfolios: users[trimmed]?.portfolios || [],
+    }
+    localStorage.setItem('pg_users', JSON.stringify(users))
+    localStorage.setItem(
+      'auth_user',
+      JSON.stringify({ name, email: trimmed })
+    )
+    if (localStorage.getItem('ai_credits') === null) {
+      localStorage.setItem('ai_credits', '3')
+    }
+
+    navigate('/dashboard')
+  } catch {
+    setError('Something went wrong. Try again.')
+  }
+  setLoading(false)
+}
 
   return (
     <div className="login-screen">
