@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const LOGIN_API_URL = ''
+// When backend is ready, put the URL here:
+const LOGIN_API_URL = '' // e.g. 'https://your-backend.com/api/auth/login'
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -12,43 +13,63 @@ export default function SignIn() {
   const [showPass, setShowPass] = useState(false)
 
   async function handleSubmit(e) {
-  e.preventDefault()
-  setError('')
-  setLoading(true)
+    e.preventDefault()
+    setError('')
+    setLoading(true)
 
-  const trimmed = email.trim().toLowerCase()
-  if (!trimmed || !password) {
-    setError('Please enter email and password.')
+    const trimmed = email.trim().toLowerCase()
+    if (!trimmed || !password) {
+      setError('Please enter email and password.')
+      setLoading(false)
+      return
+    }
+
+    try {
+      if (LOGIN_API_URL) {
+        // Real backend
+        const res = await fetch(LOGIN_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: trimmed, password }),
+        })
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) {
+          setError(data.message || data.error || 'Login failed.')
+          setLoading(false)
+          return
+        }
+        if (data.token) localStorage.setItem('auth_token', data.token)
+        if (data.user) localStorage.setItem('auth_user', JSON.stringify(data.user))
+        navigate('/dashboard')
+      } else {
+        // Demo mode (no API yet) — always allows sign in
+        const users = JSON.parse(localStorage.getItem('pg_users') || '{}')
+        const name = (users[trimmed] && users[trimmed].name) || trimmed.split('@')[0]
+
+        users[trimmed] = {
+          name: name,
+          email: trimmed,
+          password: password,
+          portfolios: (users[trimmed] && users[trimmed].portfolios) || [],
+        }
+
+        localStorage.setItem('pg_users', JSON.stringify(users))
+        localStorage.setItem(
+          'auth_user',
+          JSON.stringify({ name: name, email: trimmed })
+        )
+
+        if (localStorage.getItem('ai_credits') === null) {
+          localStorage.setItem('ai_credits', '3')
+        }
+
+        navigate('/dashboard')
+      }
+    } catch (err) {
+      setError('Something went wrong. Try again.')
+    }
     setLoading(false)
-    return
   }
-
-  try {
-    const users = JSON.parse(localStorage.getItem('pg_users') || '{}')
-    const name = users[trimmed]?.name || trimmed.split('@')[0]
-
-    users[trimmed] = {
-      ...(users[trimmed] || {}),
-      name,
-      email: trimmed,
-      password,
-      portfolios: users[trimmed]?.portfolios || [],
-    }
-    localStorage.setItem('pg_users', JSON.stringify(users))
-    localStorage.setItem(
-      'auth_user',
-      JSON.stringify({ name, email: trimmed })
-    )
-    if (localStorage.getItem('ai_credits') === null) {
-      localStorage.setItem('ai_credits', '3')
-    }
-
-    navigate('/dashboard')
-  } catch {
-    setError('Something went wrong. Try again.')
-  }
-  setLoading(false)
-}
 
   return (
     <div className="login-screen">
@@ -56,7 +77,9 @@ export default function SignIn() {
         <div className="login-logo">P</div>
         <h1>Sign in</h1>
         <p className="sub">Welcome back to Portfolio Generator</p>
+
         {error && <div className="login-error">{error}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
