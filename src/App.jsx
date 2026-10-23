@@ -29,17 +29,20 @@ export default function App() {
     <BrowserRouter>
       <ThemeToggle />
       <Routes>
-        <Route path="/" element={<Navigate to="/signin" replace />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/dashboard" element={<UserDashboard />} />
-        <Route path="/my-portfolios" element={<UserDashboard />} />
-        <Route path="/create-portfolio" element={<PortfolioBuilder />} />
-        <Route path="/templates" element={<PortfolioBuilder />} />
-        <Route path="/builder" element={<PortfolioBuilder />} />
-        <Route path="/ai" element={<AIStudio />} />
-        <Route path="/premium" element={<Premium />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="*" element={<Navigate to="/signin" replace />} />
+        <Routes>
+  <Route path="/" element={<HomePage />} />
+  <Route path="/signin" element={<SignIn />} />
+  <Route path="/dashboard" element={<UserDashboard />} />
+  <Route path="/my-portfolios" element={<UserDashboard />} />
+  <Route path="/create-portfolio" element={<PortfolioBuilder />} />
+  <Route path="/builder" element={<PortfolioBuilder />} />
+  <Route path="/templates" element={<Templates />} />
+  <Route path="/profile" element={<Profile />} />
+  <Route path="/ai" element={<AIStudio />} />
+  <Route path="/premium" element={<Premium />} />
+  <Route path="/admin" element={<AdminDashboard />} />
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
       </Routes>
     </BrowserRouter>
   )
