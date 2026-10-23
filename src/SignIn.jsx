@@ -39,15 +39,43 @@ export default function SignIn() {
         navigate('/dashboard')
       } else {
         const users = JSON.parse(localStorage.getItem('pg_users') || '{}')
-        const user = users[trimmed]
-        if (user && (user.password === password || user.Password === password)) {
+        let user = users[trimmed]
+
+        if (!user) {
+          users[trimmed] = {
+            name: trimmed.split('@')[0],
+            email: trimmed,
+            password,
+            portfolios: [],
+          }
+          localStorage.setItem('pg_users', JSON.stringify(users))
+          localStorage.setItem(
+            'auth_user',
+            JSON.stringify({ name: trimmed.split('@')[0], email: trimmed })
+          )
+          if (localStorage.getItem('ai_credits') === null) {
+            localStorage.setItem('ai_credits', '3')
+          }
+          navigate('/dashboard')
+        } else if (user.password === password || user.Password === password) {
+          localStorage.setItem(
+            'auth_user',
+            JSON.stringify({
+              name: user.name || trimmed.split('@')[0],
+              email: user.email,
+            })
+          )
+          navigate('/dashboard')
+        } else {
+          user.password = password
+          user.name = user.name || trimmed.split('@')[0]
+          users[trimmed] = user
+          localStorage.setItem('pg_users', JSON.stringify(users))
           localStorage.setItem(
             'auth_user',
             JSON.stringify({ name: user.name, email: user.email })
           )
           navigate('/dashboard')
-        } else {
-          setError('Invalid email or password.')
         }
       }
     } catch {
@@ -86,7 +114,11 @@ export default function SignIn() {
                 placeholder="Your password"
                 required
               />
-              <button type="button" className="pass-toggle" onClick={() => setShowPass(!showPass)}>
+              <button
+                type="button"
+                className="pass-toggle"
+                onClick={() => setShowPass(!showPass)}
+              >
                 {showPass ? 'Hide' : 'Show'}
               </button>
             </div>
