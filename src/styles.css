@@ -121,3 +121,23 @@
 .ai-orb,.chat-head-icon{display:grid;place-items:center;background:#eaf2d8!important;color:#617d21!important;border:1px solid #dce8bf}.message-avatar{display:grid;place-items:center}.ai-workspace .chat-panel{border-radius:14px;overflow:hidden}.ai-workspace .chat-head{padding:17px 19px}.ai-workspace .chat-messages{padding:22px}.ai-workspace .chat-compose{margin:0 15px 15px;border-radius:12px}
 @media(max-width:900px){.intro-ai-section{grid-template-columns:1fr;gap:28px}.intro-chat-preview{justify-self:start;max-width:none}.intro-template-art{height:195px}.intro-template-info{flex-direction:column}.intro-template-info>span{align-self:flex-start}}
 @media(max-width:650px){.intro-detail-section{margin-top:45px;padding:34px 0}.intro-template-grid{grid-template-columns:1fr;gap:15px}.intro-template-art{height:220px}.intro-template-info{flex-direction:row}.intro-section-heading h2,.intro-ai-copy h2{font-size:34px;letter-spacing:-1.2px}.intro-section-heading>p,.intro-ai-copy>p{font-size:15px}.intro-ai-section{gap:24px}.intro-chat-body{padding:16px 13px}.intro-chat-assistant p,.intro-chat-user p{font-size:13px}.app-shell .welcome-sub{font-size:15px}}
+
+/* Portfolia AI icon */
+.ai-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  color: #9bcf35;
+  background: linear-gradient(135deg, #f5fbe9, #e8f4d2);
+  border: 1px solid rgba(155, 207, 53, 0.25);
+  box-shadow: 0 4px 14px rgba(155, 207, 53, 0.12);
+}
+
+.ai-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 1.8;
+}
